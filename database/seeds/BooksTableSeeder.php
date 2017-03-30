@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class UsersTableSeeder extends Seeder
+class BooksTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,10 +11,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-
-        factory(App\User::class, 1)->create([
-            'email' => 'admin@editora.com'
-        ]);
-
+        factory(App\Book::class,20)->create();
     }
 }
