@@ -12,7 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(CodeEditora\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -24,7 +24,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 
-$factory->define(App\Category::class, function (Faker\Generator $faker) {
+$factory->define(CodeEditora\Category::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -33,7 +33,7 @@ $factory->define(App\Category::class, function (Faker\Generator $faker) {
 });
 
 
-$factory->define(App\Book::class, function (Faker\Generator $faker) {
+$factory->define(CodeEditora\Book::class, function (Faker\Generator $faker) {
     static $password;
 
     return [

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace CodeEditora\Http\Controllers;
 
-use App\User;
+use CodeEditora\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller

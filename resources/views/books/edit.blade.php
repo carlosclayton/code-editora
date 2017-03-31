@@ -8,15 +8,13 @@
 
                 <div class="panel-body">
 
-                    @include('errors._check')
-
                     {!! Form::model($book, ['route' => ['books.update', $book->id], 'class' => 'form', 'method' => 'PUT']) !!}
 
                     @include('books._form')
 
-                    <div class="form-group">
-                        {!! Form::submit('Update',['class' => 'btn btn-primary']) !!}
-                    </div>
+                    {!! Html::openFormGroup() !!}
+                    {!! Form::submit('Update',['class' => 'btn btn-primary']) !!}
+                    {!! Html::closeFormGroup() !!}
 
                     {!! Form::close() !!}
                 </div>

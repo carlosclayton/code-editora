@@ -1,6 +1,6 @@
-
-
-<div class="form-group">
-    {!! Form::label('name', 'Categoria:') !!}
+{!! Html::openFormGroup('name', $errors) !!}
+    {!! Form::label('name', 'Categoria:', ['class' =>'control-label']) !!}
     {!! Form::text('name', null , ['class' => 'form-control',  'placeholder'=> 'Input category here']) !!}
-</div>
+    {!! Form::error('name', $errors ) !!}
+{!! Html::closeFormGroup() !!}
+

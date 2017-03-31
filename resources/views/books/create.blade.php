@@ -8,15 +8,13 @@
 
                 <div class="panel-body">
 
-                    @include('errors._check')
-
                     {!! Form::open(['route' => 'books.store', 'class' => 'form']) !!}
 
                     @include('books._form')
 
-                    <div class="form-group">
-                        {!! Form::submit('New',['class' => 'btn btn-primary']) !!}
-                    </div>
+                    {!! Html::openFormGroup() !!}
+                    {!! Form::submit('New',['class' => 'btn btn-primary']) !!}
+                    {!! Html::closeFormGroup() !!}
 
                     {!! Form::close() !!}
                 </div>

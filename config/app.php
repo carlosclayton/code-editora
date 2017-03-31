@@ -77,7 +77,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'pt-br',
 
     /*
     |--------------------------------------------------------------------------
@@ -174,11 +174,11 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        CodeEditora\Providers\AppServiceProvider::class,
+        CodeEditora\Providers\AuthServiceProvider::class,
+        // CodeEditora\Providers\BroadcastServiceProvider::class,
+        CodeEditora\Providers\EventServiceProvider::class,
+        CodeEditora\Providers\RouteServiceProvider::class,
 
     ],
 

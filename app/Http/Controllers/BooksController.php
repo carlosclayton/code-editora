@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace CodeEditora\Http\Controllers;
 
-use App\Book;
+use CodeEditora\Book;
+use CodeEditora\Http\Requests\BookRequest;
 use Illuminate\Http\Request;
 
 class BooksController extends Controller
@@ -34,7 +35,7 @@ class BooksController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BookRequest $request)
     {
         Book::create($request->all());
         return redirect()->route('books.index');
@@ -58,7 +59,7 @@ class BooksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Book $book)
+    public function update(BookRequest $request, Book $book)
     {
         $book->fill($request->all());
         $book->save();

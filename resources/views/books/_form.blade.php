@@ -1,16 +1,21 @@
 
 
-<div class="form-group">
+{!! Html::openFormGroup('title', $errors) !!}
     {!! Form::label('title', 'Title:') !!}
     {!! Form::text('title', null , ['class' => 'form-control',  'placeholder'=> 'Input new Title here']) !!}
-</div>
+{!! Form::error('title', $errors ) !!}
+{!! Html::closeFormGroup() !!}
 
-<div class="form-group">
+{!! Html::openFormGroup('subtitle', $errors) !!}
     {!! Form::label('subtitle', 'SubTitle:') !!}
     {!! Form::text('subtitle', null , ['class' => 'form-control',  'placeholder'=> 'Input new SubTitle here']) !!}
-</div>
+{!! Form::error('subtitle', $errors ) !!}
+{!! Html::closeFormGroup() !!}
 
-<div class="form-group">
+
+{!! Html::openFormGroup('price', $errors) !!}
     {!! Form::label('Price', 'Price:') !!}
     {!! Form::text('price', null , ['class' => 'form-control',  'placeholder'=> 'Input new price here']) !!}
-</div>
+{!! Form::error('price', $errors ) !!}
+{!! Html::closeFormGroup() !!}
+

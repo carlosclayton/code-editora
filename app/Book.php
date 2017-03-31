@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace CodeEditora;
 
 use Illuminate\Database\Eloquent\Model;
 
