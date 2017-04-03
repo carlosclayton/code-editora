@@ -2,13 +2,25 @@
 
 namespace CodeEditora\Http\Controllers;
 
-use CodeEditora\Category;
+use CodeEditora\Models\Category;
 use CodeEditora\Http\Requests\CategoryRequest;
+use CodeEditora\Repositories\CategoryRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
 {
+
+    private $repository;
+
+    /**
+     * CategoriesController constructor.
+     */
+    public function __construct(CategoryRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +28,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::query()->paginate(5);
+        $categories = $this->repository->paginate(5);
         return view('categories.index', compact('categories'));
     }
 
@@ -38,7 +50,7 @@ class CategoriesController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        Category::create($request->all());
+        $this->repository->create($request->all());
         $url = $request->get('redirect_to', route('categories.index'));
         $request->session()->flash('message', 'Created successfully');
         return redirect()->to($url);
@@ -53,14 +65,10 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
 
-        /*
-        if(!$category = Category::find($id)){
-            throw new ModelNotFoundException('Categoria não encontrada');
-        };
-        */
+        $category = $this->repository->find($id);
         return view('categories.edit', compact('category'));
     }
 
@@ -71,10 +79,9 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, Category $category)
+    public function update(CategoryRequest $request, $id)
     {
-        $category->fill($request->all());
-        $category->save();
+        $this->repository->update($request->all(), $id);
         $url = $request->get('redirect_to', route('categories.index'));
         $request->session()->flash('message', 'Updated successfully');
         return redirect()->to($url);
@@ -88,10 +95,10 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
 
-        $category->delete();
+        $this->repository->delete($id);
         \Session::flash('message', 'Deleted successfully');
         return redirect()->to(\URL::previous());
     }

@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => CodeEditora\User::class,
+            'model' => CodeEditora\Models\User::class,
         ],
 
         // 'users' => [
