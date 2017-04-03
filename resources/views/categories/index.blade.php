@@ -5,37 +5,30 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><h1>Categories <a href="{{route('categories.create')}}"  class="btn btn-primary">New</a> </h1></div>
+                    <div class="panel-heading"><h1>Categories {!! Button::primary('New')->asLinkTo(route('categories.create')) !!} </h1>
+
+                    </div>
 
                     <div class="panel-body">
+                    {!!
+                    Table::withContents($categories->items())->striped()
+                    ->callback('Action', function($field, $category){
+                        $edit = route('categories.edit', ['category' => $category->id]);
+                        $dest = route('categories.destroy', ['category' => $category->id]);
+                        $index = "delete-form-{$category->id}";
+                        $form = Form::open(['route' => ['categories.destroy', 'category' => $category->id],  'method' => 'DELETE', 'id' => $index, 'style' => 'display:none']).
+                        Form::close();
 
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>First Name</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($categories as $category)
-                            <tr>
-                                <th scope="row">{{ $category->id  }}</th>
-                                <td>{{ $category->name  }}</td>
-                                <td>
-                                    <a href="{{route('categories.edit', ['id' => $category->id ])}}"  class="btn btn-primary">Edit</a> |
+                        $anch = Button::link('Delete')
+                        ->asLinkTo($dest)->addAttributes([
+                        'onclick' => "event.preventDefault();document.getElementById(\"{$index}\").submit();"
+                        ]);
 
-                                    <?php $deleteForm = "delete-form-{$loop->index}"; ?>
-                                    <a href="{{route('categories.destroy', ['category' => $category->id ])}}"
-                                       onclick="event.preventDefault();document.getElementById('{{ $deleteForm }}').submit();"
-                                       class="btn btn-danger">Delete</a>
-                                    {!! Form::open(['route' => ['categories.destroy', 'category' => $category->id],  'method' => 'DELETE', 'id' => $deleteForm, 'style' => 'display:none']) !!}
-                                    {!! Form::close() !!}
-                                </td>
-                            </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                        return Button::link('Edit')->asLinkTo($edit) . "|" . $anch . $form;
+
+                    })
+
+                    !!}
                     </div>
                 </div>
                 <div align="center"> {{ $categories->links()  }}</div>

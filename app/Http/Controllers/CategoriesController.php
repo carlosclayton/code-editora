@@ -39,7 +39,10 @@ class CategoriesController extends Controller
     public function store(CategoryRequest $request)
     {
         Category::create($request->all());
-        return redirect()->route('categories.index');
+        $url = $request->get('redirect_to', route('categories.index'));
+        $request->session()->flash('message', 'Created successfully');
+        return redirect()->to($url);
+
     }
 
 
@@ -72,8 +75,9 @@ class CategoriesController extends Controller
     {
         $category->fill($request->all());
         $category->save();
-
-        return redirect()->route('categories.index');
+        $url = $request->get('redirect_to', route('categories.index'));
+        $request->session()->flash('message', 'Updated successfully');
+        return redirect()->to($url);
 
 
     }
@@ -88,6 +92,7 @@ class CategoriesController extends Controller
     {
 
         $category->delete();
-        return redirect()->route('categories.index');
+        \Session::flash('message', 'Deleted successfully');
+        return redirect()->to(\URL::previous());
     }
 }
