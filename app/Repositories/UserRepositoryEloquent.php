@@ -4,16 +4,16 @@ namespace CodeEditora\Repositories;
 
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
-use CodeEditora\Models\Book;
-
+use CodeEditora\Repositories\UserRepository;
+use CodeEditora\Models\User;
+use CodeEditora\Validators\UserValidator;
 
 /**
- * Class BookRepositoryEloquent
- * @package namespace App\Repositories;
+ * Class UserRepositoryEloquent
+ * @package namespace CodeEditora\Repositories;
  */
-class BookRepositoryEloquent extends BaseRepository implements BookRepository
+class UserRepositoryEloquent extends BaseRepository implements UserRepository
 {
-    protected $fieldSearchable = ['title' =>'like', 'author.name' =>'like'];
     /**
      * Specify Model class name
      *
@@ -21,7 +21,7 @@ class BookRepositoryEloquent extends BaseRepository implements BookRepository
      */
     public function model()
     {
-        return Book::class;
+        return User::class;
     }
 
     

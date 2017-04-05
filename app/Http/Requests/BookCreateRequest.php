@@ -4,7 +4,7 @@ namespace CodeEditora\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BookRequest extends FormRequest
+class BookCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,9 @@ class BookRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
-            'subtitle' => 'required',
-            'price' => 'required'
+            'title' => 'required|max:255',
+            'subtitle' => 'required|max:255',
+            'price' => 'required|numeric'
         ];
     }
 }

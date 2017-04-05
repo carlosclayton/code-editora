@@ -10,7 +10,7 @@ use Prettus\Repository\Traits\TransformableTrait;
 class Book extends Model implements Transformable, TableInterface
 {
     use TransformableTrait;
-    protected $fillable = ['title', 'subtitle', 'price'];
+    protected $fillable = ['title', 'subtitle', 'price', 'author_id'];
 
     /**
      * @return array
@@ -27,7 +27,7 @@ class Book extends Model implements Transformable, TableInterface
      */
     public function getTableHeaders()
     {
-        // TODO: Implement getTableHeaders() method.
+        return ['#', 'Title', 'Author', 'Price'];
     }
 
     /**
@@ -39,6 +39,20 @@ class Book extends Model implements Transformable, TableInterface
      */
     public function getValueForHeader($header)
     {
-        // TODO: Implement getValueForHeader() method.
+        switch($header){
+            case '#':
+                return $this->id;
+            case 'Author':
+                return $this->author->name;
+            case 'Title':
+                return $this->title;
+            case 'Price':
+                return $this->price;
+        }
     }
+
+    public function author(){
+        return $this->belongsTo(User::class);
+    }
+
 }

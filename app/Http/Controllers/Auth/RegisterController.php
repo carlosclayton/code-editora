@@ -2,7 +2,7 @@
 
 namespace CodeEditora\Http\Controllers\Auth;
 
-use CodeEditora\User;
+use CodeEditora\Models\User;
 use CodeEditora\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;

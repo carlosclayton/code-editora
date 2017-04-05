@@ -3,6 +3,12 @@
 @section('content')
     <div class="container">
         <div class="row">
+            {!! Form::model($book, ['class' => 'form', 'method' => 'GET']) !!}
+            {!! Form::label('search', 'Search:') !!}
+            {!! Form::text('search', null , ['class' => 'form-control',  'placeholder'=> 'Input new Title here']) !!}
+            {!! Form::close() !!}
+        </div>
+        <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading"><h1>Categories {!! Button::primary('New')->asLinkTo(route('categories.create')) !!} </h1>

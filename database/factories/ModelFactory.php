@@ -12,7 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(CodeEditora\User::class, function (Faker\Generator $faker) {
+$factory->define(CodeEditora\Models\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -24,7 +24,7 @@ $factory->define(CodeEditora\User::class, function (Faker\Generator $faker) {
 });
 
 
-$factory->define(CodeEditora\Category::class, function (Faker\Generator $faker) {
+$factory->define(CodeEditora\Models\Category::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -33,12 +33,16 @@ $factory->define(CodeEditora\Category::class, function (Faker\Generator $faker) 
 });
 
 
-$factory->define(CodeEditora\Book::class, function (Faker\Generator $faker) {
+$factory->define(CodeEditora\Models\Book::class, function (Faker\Generator $faker) {
     static $password;
 
+
+    $repository = app(\CodeEditora\Repositories\UserRepository::class);
+    $id = $repository->all()->random()->id;
     return [
         'title' => $faker->title,
         'subtitle' => $faker->word,
         'price' => $faker->numberBetween(50, 100),
+        'author_id' =>$id
     ];
 });

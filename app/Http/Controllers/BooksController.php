@@ -2,9 +2,15 @@
 
 namespace CodeEditora\Http\Controllers;
 
+use CodeEditora\Criteria\FindByAuthorCriteria;
+use CodeEditora\Criteria\FindByTitle;
+use CodeEditora\Criteria\FindByTitleCriteria;
+use CodeEditora\Http\Requests\BookCreateRequest;
+use CodeEditora\Http\Requests\BookUpdateRequest;
 use CodeEditora\Models\Book;
 use CodeEditora\Http\Requests\BookRequest;
 use CodeEditora\Repositories\BookRepository;
+use Illuminate\Http\Request;
 
 class BooksController extends Controller
 {
@@ -23,10 +29,12 @@ class BooksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->get('search');
+        //$this->repository->pushCriteria(new FindByAuthorCriteria());
         $books = $this->repository->paginate(5);
-        return view('books.index', compact('books'));
+        return view('books.index', compact('books', 'search'));
     }
 
     /**
@@ -45,9 +53,11 @@ class BooksController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BookRequest $request)
+    public function store(BookCreateRequest $request)
     {
-        $this->repository->create($request->all());
+        $data = $request->all();
+        $data['author_id'] = \Auth::user()->id;
+        $this->repository->create($data);
         $url = $request->get('redirect_to', route('books.index'));
         $request->session()->flash('message', 'Created successfully');
         return redirect()->to($url);
@@ -73,9 +83,10 @@ class BooksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(BookRequest $request, $id)
+    public function update(BookUpdateRequest $request, $id)
     {
-        $book =  $this->repository->update($request->all, $id);
+        $data = $request->except(['author_id']);
+        $book =  $this->repository->update($data, $id);
         $url = $request->get('redirect_to', route('books.index'));
         $request->session()->flash('message', 'Updated successfully');
         return redirect()->to($url);
