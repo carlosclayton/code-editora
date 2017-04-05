@@ -3,13 +3,14 @@
 namespace CodeEditora\Models;
 
 use Bootstrapper\Interfaces\TableInterface;
+use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\Model;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 class Book extends Model implements Transformable, TableInterface
 {
-    use TransformableTrait;
+    use TransformableTrait, FormAccessible;
     protected $fillable = ['title', 'subtitle', 'price', 'author_id'];
 
     /**
@@ -51,8 +52,18 @@ class Book extends Model implements Transformable, TableInterface
         }
     }
 
+
     public function author(){
         return $this->belongsTo(User::class);
+    }
+
+    public function categories(){
+        return $this->belongsToMany(Category::class);
+    }
+
+
+    public function formCategoriesAttribute(){
+        return $this->categories->pluck('id')->all();
     }
 
 }

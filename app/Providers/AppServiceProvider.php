@@ -14,20 +14,35 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        \Form::macro('error', function($field, $errors){
-            if($errors->has($field)){
-               return view('errors._check', compact('field'));
-           }
+        \Form::macro('error', function ($field, $errors) {
+            if (!str_contains($field, '*') && $errors->has($field) || count($errors->get($field)) > 0) {
+                return view('errors._check', compact('field'));
+            }
             return null;
         });
 
-        \Html::macro('openFormGroup', function($field = null, $errors = null){
-            $hasError = ($field != null and $errors != null and $errors->has($field)) ? 'has-error' : '';
+        \Html::macro('openFormGroup', function ($field = null, $errors = null) {
+            $result = false;
+            if ($field != null and $errors != null) {
+                if (is_array($field)) {
+                    foreach ($field as $value) {
+                        if (!str_contains($value, '*') && $errors->has($value) || count($errors->get($value)) > 0) {
+                            $result = true;
+                            break;
+                        }
+                    }
+                } else {
+                    if (!str_contains($field, '*') && $errors->has($field) || count($errors->get($field)) > 0) {
+                        $result = true;
+                    }
+                }
+            }
+            $hasError = $result ? 'has-error' : '';
             return "<div class=\"form-group {$hasError}\">";
         });
 
-        \Html::macro('closeFormGroup', function(){
-           return '</div>';
+        \Html::macro('closeFormGroup', function () {
+            return '</div>';
         });
     }
 
@@ -38,7 +53,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if($this->app->environment() !== 'production'){
+        if ($this->app->environment() !== 'production') {
             $this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
     }

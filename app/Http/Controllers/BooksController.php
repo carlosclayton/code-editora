@@ -10,17 +10,20 @@ use CodeEditora\Http\Requests\BookUpdateRequest;
 use CodeEditora\Models\Book;
 use CodeEditora\Http\Requests\BookRequest;
 use CodeEditora\Repositories\BookRepository;
+use CodeEditora\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 
 class BooksController extends Controller
 {
     private $repository;
+    private $categoryRepository;
     /**
      * BooksController constructor.
      */
-    public function __construct(BookRepository $repository)
+    public function __construct(BookRepository $repository, CategoryRepository $categoryRepository)
     {
         $this->repository = $repository;
+        $this->categoryRepository = $categoryRepository;
     }
 
 
@@ -44,7 +47,8 @@ class BooksController extends Controller
      */
     public function create()
     {
-        return view('books.create');
+        $categories = $this->categoryRepository->lists('name', 'id');
+        return view('books.create', compact('categories'));
     }
 
     /**
@@ -73,7 +77,8 @@ class BooksController extends Controller
     public function edit($id)
     {
         $book = $this->repository->find($id);
-        return view('books.edit', compact('book'));
+        $categories = $this->categoryRepository->lists('name', 'id');
+        return view('books.edit', compact('book', 'categories'));
     }
 
     /**
