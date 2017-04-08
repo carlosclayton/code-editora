@@ -28,6 +28,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
+        //$categories = Category::Trashed()->paginate(5);
         $categories = $this->repository->paginate(5);
         return view('categories.index', compact('categories'));
     }

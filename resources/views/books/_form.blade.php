@@ -1,5 +1,11 @@
 {!! Form::hidden('redirect_to', URL::previous()) !!}
 
+{!! Html::openFormGroup('author') !!}
+{!! Form::label('Author', 'Author:') !!}
+{!! Form::text('author', $author , ['class' => 'form-control',  'placeholder'=> 'Input new Title here', 'disabled']) !!}
+{!! Html::closeFormGroup() !!}
+
+
 {!! Html::openFormGroup('title', $errors) !!}
     {!! Form::label('title', 'Title:') !!}
     {!! Form::text('title', null , ['class' => 'form-control',  'placeholder'=> 'Input new Title here']) !!}

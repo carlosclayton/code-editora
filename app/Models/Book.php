@@ -5,13 +5,15 @@ namespace CodeEditora\Models;
 use Bootstrapper\Interfaces\TableInterface;
 use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Prettus\Repository\Contracts\Transformable;
 use Prettus\Repository\Traits\TransformableTrait;
 
 class Book extends Model implements Transformable, TableInterface
 {
-    use TransformableTrait, FormAccessible;
+    use TransformableTrait, FormAccessible, SoftDeletes;
     protected $fillable = ['title', 'subtitle', 'price', 'author_id'];
+    protected $dates = ['deleted_at'];
 
     /**
      * @return array
@@ -58,7 +60,7 @@ class Book extends Model implements Transformable, TableInterface
     }
 
     public function categories(){
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class)->withTrashed();
     }
 
 

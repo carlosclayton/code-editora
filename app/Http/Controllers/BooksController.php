@@ -47,8 +47,9 @@ class BooksController extends Controller
      */
     public function create()
     {
-        $categories = $this->categoryRepository->lists('name', 'id');
-        return view('books.create', compact('categories'));
+        $author = \Auth::user()->name;
+        $categories = $this->categoryRepository->listsWithMutators('name_trashed', 'id');
+        return view('books.create', compact('author','categories'));
     }
 
     /**
@@ -77,8 +78,11 @@ class BooksController extends Controller
     public function edit($id)
     {
         $book = $this->repository->find($id);
-        $categories = $this->categoryRepository->lists('name', 'id');
-        return view('books.edit', compact('book', 'categories'));
+        $this->categoryRepository->withTrashed();
+        $author = $book->author->name;
+        $categories = $this->categoryRepository->listsWithMutators('name_trashed', 'id');
+
+        return view('books.edit', compact('book','author', 'categories'));
     }
 
     /**

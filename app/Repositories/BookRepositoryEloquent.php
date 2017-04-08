@@ -2,6 +2,8 @@
 
 namespace CodeEditora\Repositories;
 
+use CodeEditora\Criteria\CriteriaTrashedTrait;
+use CodeEditora\Criteria\OnlyTrashedTrait;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use CodeEditora\Models\Book;
@@ -13,6 +15,9 @@ use CodeEditora\Models\Book;
  */
 class BookRepositoryEloquent extends BaseRepository implements BookRepository
 {
+    use CriteriaTrashedTrait;
+    use RepositoryRestoreTrait;
+
     protected $fieldSearchable = ['title' =>'like', 'author.name' =>'like'];
     /**
      * Specify Model class name
