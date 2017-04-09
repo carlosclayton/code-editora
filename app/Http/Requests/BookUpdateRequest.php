@@ -31,7 +31,7 @@ class BookUpdateRequest extends FormRequest
         }
 
         $book = $this->repository->find($id);
-        return $book->author_id = \Auth::user()->id;
+        return $book->author_id == \Auth::user()->id;
     }
 
     /**
@@ -42,7 +42,11 @@ class BookUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|max:255',
+            'subtitle' => 'required|max:255',
+            'price' => 'required|numeric',
+            'categories' => 'required|array',
+            'categories.*' => 'required|exists:categories,id'
         ];
     }
 }
