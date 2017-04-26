@@ -2,8 +2,8 @@
 
 namespace CodeEditora\Http\Controllers\Auth;
 
-use CodeEditora\Models\User;
-use CodeEditora\Http\Controllers\Controller;
+use CodeEduUser\Models\User;
+use CodeEduBook\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 

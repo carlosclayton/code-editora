@@ -2,7 +2,7 @@
 
 namespace CodeEditora\Http\Controllers\Auth;
 
-use CodeEditora\Http\Controllers\Controller;
+use CodeEduBook\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller

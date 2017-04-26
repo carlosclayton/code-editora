@@ -43,7 +43,12 @@
                                         'title' => 'Trash'
                                 ]
                             ]
-                    ]
+                    ],
+                    [
+                            'link' => route('codeeduuser.users.index'),
+                            'title' => 'Users'
+                    ],
+
             ]);
             $logout = Navigation::links([
                 [
@@ -66,7 +71,7 @@
 
     ?>
     {!! $navbar !!}
-        {!! Form::open(['url' => url('/logout'), 'id' => 'logout-form', 'style' => 'display:none']) !!}
+        {!! Form::open(['url' => url('/logout'), 'method'=> 'POST', 'id' => 'logout-form', 'style' => 'display:none']) !!}
         {!! Form::close() !!}
 
         @if(Session::has('message'))

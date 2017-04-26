@@ -3,6 +3,7 @@
 namespace CodeEditora\Http\Controllers;
 
 use CodeEditora\User;
+use CodeEduBook\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
