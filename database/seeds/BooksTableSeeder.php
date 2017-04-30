@@ -11,9 +11,9 @@ class BooksTableSeeder extends Seeder
      */
     public function run()
     {
-        $categories = \CodeEditora\Models\Category::all();
+        $categories = CodeEduBook\Models\Category::all();
 
-        factory(CodeEditora\Models\Book::class,20)->create()->each(function($book) use($categories){
+        factory(CodeEduBook\Models\Book::class,20)->create()->each(function($book) use($categories){
 
             $catRandom = $categories->random(4);
             $book->categories()->sync($catRandom->pluck('id')->all());

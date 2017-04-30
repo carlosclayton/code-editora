@@ -31,6 +31,8 @@
                             ->asLinkTo($dest)->addAttributes([
                             'onclick' => "event.preventDefault();document.getElementById(\"{$index}\").submit();"
                             ]);
+                            $anchFlag = '<a href="" title="Disable">Excluir</a>';
+                            $anch = $user->id == \Auth::user()->id ? $anchFlag: $anch;
 
                             return Button::link('Edit')->asLinkTo($edit) . "|" . $anch . $form;
 

@@ -78,4 +78,22 @@ class User extends Authenticatable implements Transformable, TableInterface
     {
         // TODO: Implement transform() method.
     }
+
+    public function roles(){
+        return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * @param Collection|String $role
+     * @return bollean
+     */
+    public function hasRole($role){
+        return is_string($role) ? $this->roles->contains('name', $role) : (boolean) $role->intersect($this->roles)->count();
+    }
+
+
+    public function isAdmin(){
+        return $this->hasRole(config('codeeduuser.acl.role_admin'));
+    }
+
 }
