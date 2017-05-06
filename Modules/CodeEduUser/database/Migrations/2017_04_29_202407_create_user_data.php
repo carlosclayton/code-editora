@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use CodeEduUser\Models\User;
 
 class CreateUserData extends Migration
 {
@@ -31,7 +32,7 @@ class CreateUserData extends Migration
     public function down()
     {
         \Schema::disableForeignKeyConstraints();
-        $user = \App\User::where('email', config('codeeduuser.user_default.email'));
+        $user = User::where('email', config('codeeduuser.user_default.email'));
         $user->forceDelete();
         \Schema::enableForeignKeyConstraints();
 

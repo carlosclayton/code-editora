@@ -4,6 +4,7 @@ namespace CodeEduUser\Models;
 
 use Bootstrapper\Interfaces\TableInterface;
 use CodeEduBook\Models\Books;
+use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
@@ -13,7 +14,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements Transformable, TableInterface
 {
-    use TransformableTrait, Notifiable, SoftDeletes;
+    use TransformableTrait, Notifiable, SoftDeletes, FormAccessible;
 
     /**
      * @var array
@@ -48,7 +49,7 @@ class User extends Authenticatable implements Transformable, TableInterface
      */
     public function getTableHeaders()
     {
-        return ['#', 'Name', 'E-mail'];
+        return ['#', 'Name', 'E-mail', 'Roles'];
     }
 
     /**
@@ -67,10 +68,16 @@ class User extends Authenticatable implements Transformable, TableInterface
                 return $this->name;
             case 'E-mail':
                 return $this->email;
+            case 'Roles':
+                return $this->roles->implode('name', ' | ');
 
         }
     }
 
+
+    public function formRolesAttribute(){
+        return $this->roles->pluck('id')->all();
+    }
     /**
      * @return array
      */

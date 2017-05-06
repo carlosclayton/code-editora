@@ -45,9 +45,22 @@
                             ]
                     ],
                     [
-                            'link' => route('codeeduuser.users.index'),
-                            'title' => 'Users'
+                            'Users',
+                            [
+                                    [
+                                            'link' => route('codeeduuser.users.index'),
+                                            'title' => 'Users'
+                                    ],
+                                    [
+                                            'link' => route('codeeduuser.roles.index'),
+                                            'title' => 'Roles'
+                                    ],
+                            ]
                     ],
+
+
+
+
 
             ]);
             $logout = Navigation::links([
@@ -80,6 +93,11 @@
             </div>
         @endif
 
+        @if(Session::has('error'))
+            <div class="container">
+                {!! Alert::danger(Session::get('error'))->close() !!}
+            </div>
+        @endif
 
 
 

@@ -5,6 +5,7 @@ namespace CodeEditora\Http;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 
+
 class Kernel extends HttpKernel
 {
     /**
@@ -53,7 +54,8 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \CodeEditora\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'isVerified' => \Jrean\UserVerification\Middleware\IsVerified::class
+        'isVerified' => \Jrean\UserVerification\Middleware\IsVerified::class,
+        'auth.resource' => \CodeEduUser\Http\Middleware\AuthorizationResource::class
 
     ];
 }

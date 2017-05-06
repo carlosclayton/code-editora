@@ -18,11 +18,12 @@ class CreateAclData extends Migration
     {
         $roleAdmin = Role::create([
             'name' => config('codeeduuser.acl.role_admin'),
-            'description' => 'User administrator'
+            'description' => config('codeeduuser.acl.role_description')
         ]);
 
-        $user = User::where('email', config('codeeduuser.user_dafault.email'))->first();
+        $user = User::where('email', config('codeeduuser.user_default.email'))->first();
         $user->roles()->save($roleAdmin);
+        $roleAdmin->permissions()->attach(1);
     }
 
     /**
@@ -33,8 +34,11 @@ class CreateAclData extends Migration
     public function down()
     {
         $roleAdmin = Role::where('name', 'Admin')->first();
-        $user = User::where('email', config('codeeduuser.user_dafault.email'))->first();
+        $user = User::where('email', config('codeeduuser.user_default.email'))->first();
         $user->roles()->detach($roleAdmin->id);
+        $roleAdmin->permissions()->detach();
+        $roleAdmin->users()->detach();
+
 
         $roleAdmin->delete();
     }

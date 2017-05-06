@@ -5,8 +5,16 @@ namespace CodeEduUser\Http\Controllers;
 use CodeEduUser\Http\Requests\UserCreateRequest;
 use CodeEduUser\Http\Requests\UserDeleteRequest;
 use CodeEduUser\Http\Requests\UserUpdateRequest;
+use CodeEduUser\Repositories\RoleRepository;
 use CodeEduUser\Repositories\UserRepository;
+use CodeEduUser\Annotations\Mapping as Permission;
 
+
+
+/**
+ *
+ * @Permission\ControllerAnnotation(name="users-admin", description="Users administration")
+ */
 class UsersController extends Controller
 {
 
@@ -15,18 +23,25 @@ class UsersController extends Controller
      */
     private $repository;
 
+
     /**
+     * @var
+     */
+    private $roleRepository;
+
+        /**
      * usersController constructor.
      */
-    public function __construct(UserRepository $repository)
+    public function __construct(UserRepository $repository, RoleRepository $roleRepository)
     {
         $this->repository = $repository;
+        $this->roleRepository = $roleRepository;
     }
 
     /**
      * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
+     * @Permission\ActionAnnotation(name="list", description="User list")
      */
     public function index()
     {
@@ -37,17 +52,18 @@ class UsersController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
+     * @Permission\ActionAnnotation(name="create", description="User create")
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        return view('codeeduuser::users.create');
+        $roles = $this->roleRepository->all()->pluck('name', 'id');
+        return view('codeeduuser::users.create', compact('roles'));
     }
 
     /**
      * Store a newly created resource in storage.
-     *
+     * @Permission\ActionAnnotation(name="store", description="User store")
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -66,13 +82,15 @@ class UsersController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
+     * @Permission\ActionAnnotation(name="edit", description="User edit")
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
 
         $user = $this->repository->find($id);
-        return view('codeeduuser::users.edit', compact('user'));
+        $roles = $this->roleRepository->all()->pluck('name', 'id');
+        return view('codeeduuser::users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -81,6 +99,7 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * @Permission\ActionAnnotation(name="update", description="User update")
      */
     public function update(UserUpdateRequest $request, $id)
     {
@@ -98,6 +117,7 @@ class UsersController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     * @Permission\ActionAnnotation(name="destroy", description="User destroy")
      */
     public function destroy(UserDeleteRequest $request, $id)
     {

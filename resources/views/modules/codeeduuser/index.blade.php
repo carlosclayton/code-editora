@@ -7,3 +7,5 @@
         This view is loaded from module: {!! config('codeeduuser.name') !!}
     </p>
 @stop
+
+

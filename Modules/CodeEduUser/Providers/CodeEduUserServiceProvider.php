@@ -2,7 +2,15 @@
 
 namespace CodeEduUser\Providers;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Doctrine\Common\Annotations\CachedReader;
+use Doctrine\Common\Cache\FilesystemCache;
 use Illuminate\Support\ServiceProvider;
+use Doctrine\Common\Annotations\Reader;
+use CodeEduUser\Annotations\PermissionReader;
+use CodeEduUser\Http\Controllers\UsersController;
+use CodeEduUser\Annotations\Mapping\ControllerAnnotation;
 
 class CodeEduUserServiceProvider extends ServiceProvider
 {
@@ -24,6 +32,13 @@ class CodeEduUserServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->publishMigrationsAndSeerders();
+
+        /*
+        $reader = app(Reader::class);
+        dd($reader->getClassAnnotations(new \ReflectionClass(UsersController::class), ControllerAnnotation::class));
+        */
+        $reader = app(PermissionReader::class);
+        $reader->getPermissions();
     }
 
     /**
@@ -36,7 +51,17 @@ class CodeEduUserServiceProvider extends ServiceProvider
         $this->app->register(\Jrean\UserVerification\UserVerificationServiceProvider::class);
         $this->app->register(RepositoryServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
+        $this->registerAnnotations();
+        $this->app->bind(Reader::class, function(){
+            return new CachedReader(
+                new AnnotationReader(),
+                new FilesystemCache(storage_path('framework/cache/doctrine-annotations')),
+                $debug = env('APP_DEBUG')
+            );
+        });
+
     }
+
 
     /**
      * Register config.
@@ -103,6 +128,11 @@ class CodeEduUserServiceProvider extends ServiceProvider
         } else {
             $this->loadTranslationsFrom(__DIR__ .'/../resources/lang', 'codeeduuser');
         }
+    }
+
+    public function registerAnnotations(){
+        $loader = require __DIR__ . "/../../../vendor/autoload.php";
+        AnnotationRegistry::registerLoader([$loader, 'loadClass']);
     }
 
     /**
