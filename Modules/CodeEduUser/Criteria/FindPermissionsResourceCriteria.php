@@ -21,6 +21,7 @@ class FindPermissionsResourceCriteria implements CriteriaInterface
      */
     public function apply($model, RepositoryInterface $repository)
     {
+
         return $model->whereNotNull('resource_name');
     }
 }

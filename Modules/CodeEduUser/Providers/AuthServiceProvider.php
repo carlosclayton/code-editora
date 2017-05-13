@@ -1,6 +1,6 @@
 <?php
 
-namespace CodeEditora\Providers;
+namespace CodeEduUser\Providers;
 
 use CodeEduUser\Criteria\FindPermissionsResourceCriteria;
 use Illuminate\Support\Facades\Gate;
@@ -26,14 +26,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        \Gate::define('update-book', function ($user, $book) {
-            return $user->id == $book->author_id;
-        });
-
-        \Gate::before(function () {
-
-        });
 
         if (!app()->runningInConsole() || app()->runningUnitTests()) {
 

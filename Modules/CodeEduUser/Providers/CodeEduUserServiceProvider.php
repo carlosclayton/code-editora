@@ -2,6 +2,7 @@
 
 namespace CodeEduUser\Providers;
 
+use CodeEditora\Providers\AppServiceProvider;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\Common\Annotations\CachedReader;
@@ -11,6 +12,8 @@ use Doctrine\Common\Annotations\Reader;
 use CodeEduUser\Annotations\PermissionReader;
 use CodeEduUser\Http\Controllers\UsersController;
 use CodeEduUser\Annotations\Mapping\ControllerAnnotation;
+use Jrean\UserVerification\UserVerificationServiceProvider;
+
 
 class CodeEduUserServiceProvider extends ServiceProvider
 {
@@ -48,9 +51,10 @@ class CodeEduUserServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register(\Jrean\UserVerification\UserVerificationServiceProvider::class);
+        $this->app->register(UserVerificationServiceProvider::class);
         $this->app->register(RepositoryServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
+        $this->app->register(AppServiceProvider::class);
         $this->registerAnnotations();
         $this->app->bind(Reader::class, function(){
             return new CachedReader(

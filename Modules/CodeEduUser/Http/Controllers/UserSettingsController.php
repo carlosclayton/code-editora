@@ -10,7 +10,7 @@ use CodeEduUser\Annotations\Mapping\ActionAnnotation;
 
 
 /**
- * @ControllerAnnotation(name="users-settings", description="Users administration")
+ * @ControllerAnnotation(name="users-settings", description="Users Settings administration")
  */
 class UserSettingsController extends Controller
 {
@@ -31,7 +31,7 @@ class UserSettingsController extends Controller
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @ActionAnnotation(name="edit", description="User edit")
+     * @ActionAnnotation(name="edit", description="User settings edit")
      */
     public function edit()
     {
@@ -42,7 +42,7 @@ class UserSettingsController extends Controller
 
     /**
      * @param UserSettingRequest $request
-     * @ActionAnnotation(name="update", description="User update")
+     * @ActionAnnotation(name="update", description="User settings update")
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(UserSettingRequest $request)

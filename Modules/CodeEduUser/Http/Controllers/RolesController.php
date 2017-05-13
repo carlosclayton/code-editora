@@ -20,7 +20,7 @@ use Doctrine\DBAL\Query\QueryException;
 
 /**
  *
- * @Permission\ControllerAnnotation(name="users-admin", description="Users administration")
+ * @Permission\ControllerAnnotation(name="users-admin", description="Roles administration")
  */
 class RolesController extends Controller
 {
@@ -43,7 +43,7 @@ class RolesController extends Controller
     /**
      * Display a listing of the resource.
      * @return \Illuminate\Http\Response
-     * @Permission\ActionAnnotation(name="list", description="User list")
+     * @Permission\ActionAnnotation(name="list", description="Role list")
      */
     public function index()
     {
@@ -54,7 +54,7 @@ class RolesController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     * @Permission\ActionAnnotation(name="create", description="User create")
+     * @Permission\ActionAnnotation(name="create", description="Role create")
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -64,7 +64,7 @@ class RolesController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @Permission\ActionAnnotation(name="store", description="User store")
+     * @Permission\ActionAnnotation(name="store", description="Role store")
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -83,7 +83,7 @@ class RolesController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @Permission\ActionAnnotation(name="edit", description="User edit")
+     * @Permission\ActionAnnotation(name="edit", description="Role edit")
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -99,7 +99,7 @@ class RolesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     * @Permission\ActionAnnotation(name="update", description="User update")
+     * @Permission\ActionAnnotation(name="update", description="Role update")
      */
     public function update(RoleUpdateRequest $request, $id)
     {
@@ -118,7 +118,7 @@ class RolesController extends Controller
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
-     * @Permission\ActionAnnotation(name="destroy", description="User destroy")
+     * @Permission\ActionAnnotation(name="destroy", description="Role destroy")
      */
     public function destroy(RoleDeleteRequest $request, $id)
     {

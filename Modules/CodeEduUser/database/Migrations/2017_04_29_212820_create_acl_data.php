@@ -23,7 +23,7 @@ class CreateAclData extends Migration
 
         $user = User::where('email', config('codeeduuser.user_default.email'))->first();
         $user->roles()->save($roleAdmin);
-        $roleAdmin->permissions()->attach(1);
+        //$roleAdmin->permissions()->attach(1);
     }
 
     /**
