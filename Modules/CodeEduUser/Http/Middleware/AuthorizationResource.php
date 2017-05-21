@@ -30,9 +30,10 @@ class AuthorizationResource
         $currentAction = \Route::currentRouteAction();
         list($controller, $action) = explode('@', $currentAction);
         $permission = \PermissionReader::getPermission($controller, $action);
+
         if(count($permission)){
             $permission = $permission[0];
-
+            //dd($permission);
             if(!\Gate::allows("{$permission['name']}/{$permission['resource_name']}")){
                 throw new AuthorizationException('Access denied');
             }

@@ -22,6 +22,7 @@
                     ->callback('Action', function($field, $book){
                         $edit = route('books.edit', ['book' => $book->id]);
                         $dest = route('books.destroy', ['book' => $book->id]);
+                        $chapters = route('chapters.index', ['book' => $book->id]);
                         $index = "delete-form-{$book->id}";
                         $form = Form::open(['route' => ['books.destroy', 'book' => $book->id],  'method' => 'DELETE', 'id' => $index, 'style' => 'display:none']).
                         Form::close();
@@ -31,7 +32,7 @@
                         'onclick' => "event.preventDefault();document.getElementById(\"{$index}\").submit();"
                         ]);
 
-                        return Button::link('Edit')->asLinkTo($edit) . "|" . $anch . $form;
+                        return Button::link('Edit')->asLinkTo($edit) . "|" . Button::link('Chapter')->asLinkTo($chapters) ."|" . $anch . $form;
 
                     })
 

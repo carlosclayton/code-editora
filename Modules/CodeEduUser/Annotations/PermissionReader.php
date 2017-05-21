@@ -75,13 +75,16 @@ class PermissionReader
 
     private function getControllers()
     {
-        $dir = __DIR__ . config('codeeduuser.acl.controllers_annotations');
+        $dirs = config('codeeduuser.acl.controllers_annotations');
+        $config = include __DIR__ . '/../Config/config.local.php';
+        $dirs = array_merge($dirs, $config['acl']['controllers_annotations']);
         $files = [];
-        foreach (\File::allFiles($dir) as $file) {
-            $files[] = $file->getRealPath();
-            require_once $file->getRealPath();
+        foreach($dirs as $dir){
+            foreach (\File::allFiles($dir) as $file) {
+                $files[] = $file->getRealPath();
+                require_once $file->getRealPath();
+            }
         }
-
         return $files;
     }
 

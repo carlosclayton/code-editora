@@ -13,7 +13,7 @@ use CodeEduUser\Annotations\Mapping as Permission;
 
 /**
  *
- * @Permission\ControllerAnnotation(name="users-admin", description="Users administration")
+ * @Permission\ControllerAnnotation(name="user-admin", description="Users administration")
  */
 class UsersController extends Controller
 {

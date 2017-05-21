@@ -24,80 +24,85 @@
 <div id="app">
     <?php
     $navbar = Navbar::withBrand(config('app.name'), url('/'));
-        if(Auth::check()){
-            $links = Navigation::links([
-                    [
-                            'link' => route('categories.index'),
-                            'title' => 'Categories'
-                    ],
-                    [
-                            'Books',
-                            [
+    if(Auth::check()){
+        $arrayLinks =
+        [
+                [
+                        'link' => route('categories.index'),
+                        'title' => 'Categories',
+                        'permission' => 'category-admin/list'
+
+                ],
+                [
+                        'Books',
+                        [
                                 [
                                         'link' => route('books.index'),
-                                        'title' => 'List'
+                                        'title' => 'List',
+                                        'permission' => 'book-admin/list'
+
 
                                 ],
                                 [
                                         'link' => route('trashed.books.index'),
-                                        'title' => 'Trash'
+                                        'title' => 'Trash',
+                                        'permission' => 'book-trashed-admin/list'
                                 ]
-                            ]
-                    ],
-                    [
-                            'Users',
-                            [
-                                    [
-                                            'link' => route('codeeduuser.users.index'),
-                                            'title' => 'Users'
-                                    ],
-                                    [
-                                            'link' => route('codeeduuser.roles.index'),
-                                            'title' => 'Roles'
-                                    ],
-                            ]
-                    ],
+                        ]
+                ],
 
-
-
-
-
-            ]);
-            $logout = Navigation::links([
                 [
+                        'Users',
+                        [
+                                [
+                                        'link' => route('codeeduuser.users.index'),
+                                        'title' => 'Users',
+                                        'permission' => 'user-admin/list'
+                                ],
+                                [
+                                        'link' => route('codeeduuser.roles.index'),
+                                        'title' => 'Roles',
+                                        'permission' => 'role-admin/list'
+                                ],
+                        ]
+                ]
+        ];
+    $links = Navigation::links(\NavbarAuthorization::getLinksAuthorized($arrayLinks));
+    $logout = Navigation::links([
+            [
                     Auth::user()->name,
                     [
-                        [
-                            'link' => url('/logout'),
-                            'title' => 'Logout',
-                            'linkAttributes' => [
-                                    'onlclick' => "event.preventDefault();document.getElementById(\"logout-form\").submit();"
+                            [
+                                    'link' => url('/logout'),
+                                    'title' => 'Logout',
+                                    'linkAttributes' => [
+                                            'onlclick' => "event.preventDefault();document.getElementById(\"logout-form\").submit();"
+                                    ]
+
                             ]
-
-                        ]
                     ]
-                ]
-            ])->right();
-            $navbar->withContent($links)->withContent($logout);
+            ]
+    ])->right();
+    $navbar->withContent($links)->withContent($logout);
 
-        }
+    }
 
     ?>
     {!! $navbar !!}
-        {!! Form::open(['url' => url('/logout'), 'method'=> 'POST', 'id' => 'logout-form', 'style' => 'display:none']) !!}
-        {!! Form::close() !!}
+    {!! Form::open(['url' => url('/logout'), 'method'=> 'POST', 'id' => 'logout-form', 'style' => 'display:none']) !!}
+    {!! Form::close() !!}
 
-        @if(Session::has('message'))
-            <div class="container">
+    @if(Session::has('message'))
+        <div class="container">
             {!! Alert::success(Session::get('message'))->close() !!}
-            </div>
-        @endif
+        </div>
+    @endif
 
-        @if(Session::has('error'))
-            <div class="container">
-                {!! Alert::danger(Session::get('error'))->close() !!}
-            </div>
-        @endif
+    @if(Session::has('error'))
+        <div class="container">
+            {!! Alert::danger(Session::get('error'))->close() !!}
+        </div>
+    @endif
 
 
 
@@ -106,5 +111,6 @@
 
 <!-- Scripts -->
 <script src="/js/app.js"></script>
+@stack('scripts');
 </body>
 </html>

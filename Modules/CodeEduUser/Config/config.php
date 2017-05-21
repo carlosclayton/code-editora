@@ -18,8 +18,8 @@ return [
     'acl' => [
         'role_admin' => env('ROLE_ADMIN', 'Admin'),
         'role_description' => env('ROLE_DESCRIPTION', 'User administrator'),
-        'controllers_annotations' =>
-            '/../Http/controllers'
+        'controllers_annotations' => [
 
+        ]
     ]
 ];

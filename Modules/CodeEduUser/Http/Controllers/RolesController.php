@@ -20,7 +20,7 @@ use Doctrine\DBAL\Query\QueryException;
 
 /**
  *
- * @Permission\ControllerAnnotation(name="users-admin", description="Roles administration")
+ * @Permission\ControllerAnnotation(name="role-admin", description="Roles administration")
  */
 class RolesController extends Controller
 {
@@ -132,6 +132,11 @@ class RolesController extends Controller
     }
 
 
+    /**
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @Permission\ActionAnnotation(name="edit-role-permission", description="Edit permission of role")
+     */
     public function editPermission($id){
         $role = $this->repository->find($id);
         $this->permissionRepository->pushCriteria(new FindPermissionsResourceCriteria());
@@ -144,9 +149,15 @@ class RolesController extends Controller
         return view('codeeduuser::roles.permissions', compact('role', 'permissions', 'permissionsGroup'));
     }
 
+    /**
+     * @param PermissionRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @Permission\ActionAnnotation(name="update-role-permission", description="Update permission of role")
+     */
     public function updatePermission(PermissionRequest $request, $id){
-        $data = $request->only('permissions');
-        $this->repository->update($data, $id);
+        $data = $request->get('permissions', []);
+        $this->repository->updatePermissions($data, $id);
         $url = $request->get('redirect_to', route('codeeduuser.roles.index'));
         $request->session()->flash('message', 'Updated successfully');
         return redirect()->to($url);

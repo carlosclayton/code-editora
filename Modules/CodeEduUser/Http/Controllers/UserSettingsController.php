@@ -10,7 +10,7 @@ use CodeEduUser\Annotations\Mapping\ActionAnnotation;
 
 
 /**
- * @ControllerAnnotation(name="users-settings", description="Users Settings administration")
+ * @ControllerAnnotation(name="user-setting-admin", description="Users Settings administration")
  */
 class UserSettingsController extends Controller
 {
